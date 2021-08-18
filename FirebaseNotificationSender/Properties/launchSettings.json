@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "FirebaseNotificationSender": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "D:\\fcm-sample\\Config\\da-test-31c8b-firebase-adminsdk-wtskc-ca5523e41f.json"
+      }
+    }
+  }
+}

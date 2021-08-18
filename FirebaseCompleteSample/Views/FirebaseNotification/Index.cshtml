@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-analytics.js"></script>
+
+
+<script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+        apiKey: "AIzaSyB6w7pOhyI3z22EiNFwsovxEQg18eo2x-g",
+        projectId: "da-test-31c8b",
+        messagingSenderId: "65550940234",
+        appId: "1:65550940234:web:4049806afca88907feceb3",
+        measurementId: "G-TKMVCK5F3B"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+
+
+    const messaging = firebase.messaging();
+
+    function GetToken() {
+        // Get registration token. Initially this makes a network call, once retrieved
+        // subsequent calls to getToken will return from cache.
+        messaging.getToken({ vapidKey: 'BMYbSCf0M7uFCwC1RyPXMCH3BNaWjLXRk5Ri6dxw0nL7tFyAgZLbZe38CLSxfoDNV347-MeLyho6fJtaIywX5QY' }).then((currentToken) => {
+            if (currentToken) {
+                $("#Token").val(currentToken);
+            } else {
+
+                alert('No registration token available. Request permission to generate one.');
+            }
+        }).catch((err) => {
+            alert('An error occurred while retrieving token. ', err);
+        });
+    }
+
+</script>
+
+
+<form action="/" method="post">
+
+    <div class="mb-3 row">
+        <label for="Token" class="col-sm-2 col-form-label">Token</label>
+        <div class="col-sm-10">
+            <input type="text" name="Token" readonly class="form-control-plaintext" id="Token" value="..">
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="UserName" class="col-sm-2 col-form-label">UserName</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="UserName" name="UserName">
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="GroupName" class="col-sm-2 col-form-label">GroupName</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="GroupName" name="GroupName">
+        </div>
+    </div>  <button type="button" onclick="GetToken()" class="btn btn-primary">Generate Token</button>
+    <button type="submit" asp-action="SaveToken" asp-controller="FirebaseNotification" class="btn btn-primary">Save Token</button>
+    <button type="submit" asp-action="SubscribeToGroup" asp-controller="FirebaseNotification" class="btn btn-primary">Subscribe Group</button>
+    <button type="submit" asp-action="UnsubscribeToGroup" asp-controller="FirebaseNotification" class="btn btn-primary">Unsubscribe Group</button>
+</form>
